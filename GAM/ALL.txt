@@ -1,0 +1,335 @@
+R version 4.3.0 (2023-04-21 ucrt) -- "Already Tomorrow"
+Copyright (C) 2023 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Workspace loaded from ~/.RData]
+
+> library(mgcv)
+Loading required package: nlme
+This is mgcv 1.8-42. For overview type 'help("mgcv-package")'.
+> library(mgcv)
+> data1=read.table("E:\\4. me\\kelautan\\SKRIPSICK\\Pengolahan data\\GAM\\GAM.txt", header=T)
+> data1
+          CPUE      SST       CHL    CURRENT
+1    12.209677 28.76330 0.7031025 0.18190308
+2    15.740385 28.86726 0.9310149 0.24164853
+3     6.961722 29.10116 0.4097708 0.06329979
+4     7.406699 29.85751 1.0156479 0.14506277
+5     6.232227 29.33979 0.4516609 0.09001540
+6     4.253456 28.84159 0.7081906 0.06240015
+7     6.162791 28.03641 0.9207408 0.13381318
+8    11.356164 27.22639 1.0046390 0.09830264
+9    10.934363 25.91346 2.4908708 0.06088573
+10   16.801609 27.03064 0.9784500 0.12502590
+11   11.782918 28.12109 0.6979880 0.05963633
+12   16.300000 29.23251 0.3817256 0.15183086
+13   13.195286 30.02591 0.3235591 0.04587336
+14   12.750000 29.96894 0.5996756 0.14107691
+15   16.159363 30.46139 0.4493287 0.20342383
+16   17.642534 30.61408 0.5253498 0.06676341
+17   11.140187 30.48617 1.0041041 0.07202451
+18    9.975248 30.57728 0.8245896 0.11484371
+19    8.629870 29.99657 0.6570484 0.06554222
+20    8.487500 29.85954 0.5463264 0.07529986
+21    9.528736 30.02615 0.4823184 0.06320135
+22   11.244565 29.99533 0.9458014 0.02704482
+23   10.285714 29.76994 0.7668489 0.01835383
+24    9.077381 29.36431 0.7501306 0.19845330
+25    9.734440 29.03571 0.8090126 0.12986869
+26   10.788546 28.68790 1.2840262 0.13938436
+27    8.604790 29.51654 1.0556975 0.18117038
+28   11.108974 29.40746 0.7793177 0.04308844
+29    4.481707 29.12401 0.6479234 0.07263995
+30    6.797170 28.80857 0.6719612 0.16202728
+31    8.446701 28.12921 0.7126452 0.09824388
+32   17.406926 26.94201 2.0711915 0.07415886
+33   13.671233 27.35452 0.8740911 0.08119773
+34    8.968872 28.47286 0.5694914 0.14173068
+35   18.635659 29.20692 0.7031093 0.10769796
+36   12.366102 29.26675 1.4893297 0.15646114
+37   17.518987 29.02004 0.6754186 0.14882252
+38   35.261628 28.77608 1.3869050 0.06747629
+39   22.546798 29.44347 0.9450254 0.22870595
+40   18.779904 29.49788 0.7757897 0.06142636
+41    4.925620 28.98344 0.6661189 0.09086009
+42   15.652941 28.80531 0.6388271 0.09120692
+43    6.990783 27.15874 1.6447050 0.08217102
+44   16.251064 26.52800 1.3410213 0.07980990
+45   14.857724 26.43893 0.9290359 0.05997998
+46   18.713656 27.35202 0.4400202 0.10908893
+47   38.973294 28.75996 0.3833577 0.06966860
+48   36.924138 29.11855 0.5385874 0.06971467
+49  331.363636 29.30970 0.3400597 0.07954719
+50  467.562500 29.75065 0.4604783 0.08871837
+51  151.121212 29.86764 0.5598712 0.19472167
+52  128.187500 30.33087 0.4759259 0.07202821
+53  205.650000 29.64752 1.0786970 0.10595993
+54  127.600000 28.38391 3.0656918 0.26153216
+55   84.307692 26.79925 1.5775923 0.14107327
+56   77.555556 25.30846 5.6690794 0.18809908
+57   40.666667 25.36474 4.3396647 0.10502578
+58 1316.500000 25.61613 6.7458288 0.09454534
+59  783.074074 27.36586 5.1446332 0.07291523
+60  368.230769 28.83772 1.1566621 0.11366709
+61   85.421053 29.62671 1.0680064 0.25288638
+62   76.057143 29.71049 0.5055527 0.21256849
+63   47.538462 29.81657 0.8699686 0.10944176
+64   40.642857 30.12554 1.2282037 0.07148646
+65   30.941176 30.24200 0.9496207 0.19846858
+66  129.315789 29.88133 0.6614348 0.08430324
+67  278.681818 28.66651 1.3840529 0.15598487
+68  119.680000 28.21830 0.7109364 0.07534452
+69   49.952381 27.65267 1.4225711 0.16533278
+70  146.480000 28.33518 0.7125985 0.06533277
+71  266.068182 29.30276 0.4977325 0.07417556
+72   87.000000 28.77056 1.3100327 0.22512380
+73   28.089655 29.34218 0.5622502 0.04388698
+74   18.367347 29.08991 0.5580237 0.22556886
+75   17.943820 29.39046 0.4622135 0.06151282
+76    6.840580 29.30402 0.4410619 0.09755851
+77   10.406250 29.55448 0.4360990 0.14850216
+78    8.441860 29.61944 0.3890728 0.10751101
+79    7.420455 29.27508 0.6899136 0.14228637
+80    5.623377 28.43749 0.6489683 0.15032242
+81   16.205357 27.54112 1.9423184 0.15049530
+82   25.963504 28.60347 0.6012677 0.14315164
+83   29.765517 29.51498 1.7034605 0.15949125
+84   36.897436 29.49451 0.8430277 0.07310393
+85   47.200730 29.83248 0.3505186 0.09478607
+86    8.584615 29.54994 0.2787513 0.18536115
+87    6.300000 29.56304 0.6294227 0.15548494
+88    6.786885 29.82106 0.8577118 0.12118182
+89    6.333333 29.83572 0.7916693 0.10744632
+90    6.164557 29.42127 1.0364513 0.09945733
+91    8.740741 29.08953 0.5267293 0.15243423
+92    8.160920 28.67107 0.5421831 0.13909581
+93    8.649351 29.08672 0.7777630 0.11043969
+94    5.638554 28.83729 0.5618945 0.11763840
+95   12.195876 28.89639 0.9066649 0.17081826
+96    8.204545 28.99094 0.8878519 0.13179336
+> attach(data1)
+> names(data1)
+[1] "CPUE"    "SST"     "CHL"     "CURRENT"
+> model1<-gam(CPUE~s(SST)+s(CHL)+s(CURRENT), family=gaussian, data=data1)
+> summary(model1)
+
+Family: gaussian 
+Link function: identity 
+
+Formula:
+CPUE ~ s(SST) + s(CHL) + s(CURRENT)
+
+Parametric coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)   66.950      8.295   8.071 5.02e-12 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Approximate significance of smooth terms:
+             edf Ref.df      F p-value    
+s(SST)     1.625  2.037  1.411   0.250    
+s(CHL)     8.820  8.978 31.964  <2e-16 ***
+s(CURRENT) 2.436  3.073  0.641   0.572    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+R-sq.(adj) =  0.771   Deviance explained = 80.2%
+GCV = 7722.8  Scale est. = 6606      n = 96
+> AIC(model1)
+[1] 1131.597
+> BIC(model1)
+[1] 1169.759
+> plot(model1)
+Hit <Return> to see next plot: 
+Hit <Return> to see next plot: 
+> 
+> model2<-gam(CPUE~s(SST), family=gaussian, data=data1)
+> summary(model2)
+
+Family: gaussian 
+Link function: identity 
+
+Formula:
+CPUE ~ s(SST)
+
+Parametric coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)    66.95      16.66   4.018 0.000119 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Approximate significance of smooth terms:
+         edf Ref.df    F p-value  
+s(SST) 1.791  2.252 3.68  0.0221 *
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+R-sq.(adj) =  0.076   Deviance explained = 9.34%
+GCV =  27458  Scale est. = 26659     n = 96
+> AIC(model2)
+[1] 1255.512
+> BIC(model2)
+[1] 1265.234
+> plot(model2)
+> model3<-gam(CPUE~s(CHL), family=gaussian, data=data1)
+> summary(model3)
+
+Family: gaussian 
+Link function: identity 
+
+Formula:
+CPUE ~ s(CHL)
+
+Parametric coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)   66.950      8.364   8.004 5.16e-12 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Approximate significance of smooth terms:
+         edf Ref.df     F p-value    
+s(CHL) 8.932  8.998 35.58  <2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+R-sq.(adj) =  0.767   Deviance explained = 78.9%
+GCV = 7491.5  Scale est. = 6716.4    n = 96
+> AIC(model3)
+[1] 1129.798
+> BIC(model3)
+[1] 1157.832
+> plot(model3)
+> model4<-gam(CPUE~s(CURRENT), family=gaussian, data=data1)
+> summary(model4)
+
+Family: gaussian 
+Link function: identity 
+
+Formula:
+CPUE ~ s(CURRENT)
+
+Parametric coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)    66.95      17.23   3.886 0.000192 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Approximate significance of smooth terms:
+            edf Ref.df     F p-value
+s(CURRENT) 2.79  3.521 0.816   0.575
+
+R-sq.(adj) =  0.0123   Deviance explained = 4.13%
+GCV =  29668  Scale est. = 28497     n = 96
+> AIC(model4)
+[1] 1262.874
+> BIC(model4)
+[1] 1275.157
+> plot(model4)
+> model5<-gam(CPUE~s(SST)+s(CHL), family=gaussian, data=data1)
+> summary(model5)
+
+Family: gaussian 
+Link function: identity 
+
+Formula:
+CPUE ~ s(SST) + s(CHL)
+
+Parametric coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)   66.950      8.335   8.033 4.99e-12 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Approximate significance of smooth terms:
+         edf Ref.df      F p-value    
+s(SST) 1.478  1.824  1.207   0.358    
+s(CHL) 8.872  8.989 32.601  <2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+R-sq.(adj) =  0.769   Deviance explained = 79.4%
+GCV = 7563.2  Scale est. = 6668.9    n = 96
+> AIC(model5)
+[1] 1130.358
+> BIC(model5)
+[1] 1162.03
+> plot(model5)
+> model6<-gam(CPUE~s(SST)+s(CURRENT), family=gaussian, data=data1)
+> summary(model6)
+
+Family: gaussian 
+Link function: identity 
+
+Formula:
+CPUE ~ s(SST) + s(CURRENT)
+
+Parametric coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)    66.95      16.73   4.002 0.000127 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Approximate significance of smooth terms:
+            edf Ref.df     F p-value  
+s(SST)     1.77  2.225 3.571   0.025 *
+s(CURRENT) 1.00  1.000 0.315   0.576  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+R-sq.(adj) =  0.0687   Deviance explained = 9.59%
+GCV =  27967  Scale est. = 26869     n = 96
+> AIC(model6)
+[1] 1257.208
+> BIC(model6)
+[1] 1269.441
+> plot(model6)
+> model7<-gam(CPUE~+s(CHL)+s(CURRENT), family=gaussian, data=data1)
+> summary(model7)
+
+Family: gaussian 
+Link function: identity 
+
+Formula:
+CPUE ~ +s(CHL) + s(CURRENT)
+
+Parametric coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)   66.950      8.408   7.963 6.69e-12 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Approximate significance of smooth terms:
+            edf Ref.df      F p-value    
+s(CHL)     8.93  8.998 35.033  <2e-16 ***
+s(CURRENT) 1.00  1.000  0.136   0.714    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+R-sq.(adj) =  0.765   Deviance explained = 78.9%
+GCV =   7658  Scale est. = 6786.1    n = 96
+> AIC(model1)
+[1] 1131.597
+> AIC(model7)
+[1] 1131.665
+> BIC(model7)
+[1] 1162.258
+> plot(model7)
+> plot (model1,xlab="", ylab="Effect on CPUE", font.lab=46, cex.lab=1, shade=TRUE)
+Hit <Return> to see next plot: 
+Hit <Return> to see next plot: 
+> plot (model2,xlab="SST",ylab="Effect on CPUE", font.lab=46, cex.lab=1, shade=TRUE)
+> plot (model3,xlab="CHL", ylab="Effect on CPUE", font.lab=46, cex.lab=1, shade=TRUE)
+> plot (model4,xlab="CURRENT", ylab="Effect on CPUE", font.lab=46, cex.lab=1, shade=TRUE)
+> 

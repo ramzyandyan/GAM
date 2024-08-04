@@ -1,0 +1,29 @@
+> model1<-gam(CPUE~s(SST)+s(CHL)+s(CURRENT), family=gaussian, data=data1)
+> summary(model1)
+
+Family: gaussian 
+Link function: identity 
+
+Formula:
+CPUE ~ s(SST) + s(CHL) + s(CURRENT)
+
+Parametric coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)   66.950      8.295   8.071 5.02e-12 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Approximate significance of smooth terms:
+             edf Ref.df      F p-value    
+s(SST)     1.625  2.037  1.411   0.250    
+s(CHL)     8.820  8.978 31.964  <2e-16 ***
+s(CURRENT) 2.436  3.073  0.641   0.572    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+R-sq.(adj) =  0.771   Deviance explained = 80.2%
+GCV = 7722.8  Scale est. = 6606      n = 96
+> AIC(model1)
+[1] 1131.597
+> BIC(model1)
+[1] 1169.759
